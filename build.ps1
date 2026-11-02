@@ -44,7 +44,8 @@ Write-Output "Built $(Join-Path $BuildDir 'HammerSort.dll')"
 if ($Test) {
     $testExe = Join-Path $BuildDir 'HammerSort.Tests.exe'
     & $csc /nologo /target:exe /optimize+ /warnaserror+ "/out:$testExe" `
-        (Join-Path $PSScriptRoot 'src\StableOrder.cs') (Join-Path $PSScriptRoot 'tests\StableOrderTests.cs')
+        (Join-Path $PSScriptRoot 'src\StableOrder.cs') (Join-Path $PSScriptRoot 'src\ToolSelection.cs') `
+        (Join-Path $PSScriptRoot 'tests\StableOrderTests.cs') (Join-Path $PSScriptRoot 'tests\ToolSelectionTests.cs')
     if ($LASTEXITCODE -ne 0) { throw 'Test compilation failed.' }
     & $testExe
     if ($LASTEXITCODE -ne 0) { throw 'Tests failed.' }

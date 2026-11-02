@@ -12,6 +12,18 @@ $resolver.AddSearchDirectory((Split-Path -Parent ([IO.Path]::GetFullPath($DllPat
 $parameters = [Mono.Cecil.ReaderParameters]::new()
 $parameters.AssemblyResolver = $resolver
 $plugin = [Mono.Cecil.AssemblyDefinition]::ReadAssembly([IO.Path]::GetFullPath($DllPath), $parameters)
+$optionalPluginGuid = 'Raelaziel.OdinArchitect'
+if (@($plugin.MainModule.AssemblyReferences | Where-Object { $_.Name -in @('OdinArchitect','Jotunn') }).Count -ne 0) {
+    throw 'Optional compatibility introduced a required mod assembly reference'
+}
+$pluginType = $plugin.MainModule.Types | Where-Object FullName -eq 'HammerSort.HammerSortPlugin'
+$odinDependency = @($pluginType.CustomAttributes | Where-Object {
+    $_.AttributeType.FullName -eq 'BepInEx.BepInDependency' -and $_.ConstructorArguments[0].Value -eq $optionalPluginGuid
+})
+if ($odinDependency.Count -ne 1 -or [int]$odinDependency[0].ConstructorArguments[1].Value -ne 2) {
+    throw 'OdinArchitect must be a soft dependency'
+}
+Write-Output 'PASS: OdinArchitect is optional; no OdinArchitect or Jotunn assembly dependency.'
 function Get-Types($types) {
     foreach ($type in $types) { $type; Get-Types $type.NestedTypes }
 }

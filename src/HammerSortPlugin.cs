@@ -9,11 +9,12 @@ using UnityEngine;
 namespace HammerSort
 {
     [BepInPlugin(Guid, "HammerSort", Version)]
+    [BepInDependency(OdinArchitectCompatibility.PluginGuid, BepInDependency.DependencyFlags.SoftDependency)]
     public sealed class HammerSortPlugin : BaseUnityPlugin
     {
         public const string Author = "ERKEK2000";
         public const string Guid = Author + ".valheim.hammersort";
-        public const string Version = "1.0.0";
+        public const string Version = "1.1.0";
         internal static ConfigEntry<bool> SortEnabled;
         internal static ConfigEntry<bool> OtherTools;
         internal static int Revision;
@@ -24,9 +25,11 @@ namespace HammerSort
             SortEnabled = Config.Bind("General", "Enabled", true,
                 "Put pieces you have materials for first, preserving the game order in both groups.");
             OtherTools = Config.Bind("General", "OtherBuildTools", false,
-                "Also sort the hoe, cultivator and other build tools. Default: hammer only.");
+                "Also sort the hoe, cultivator and other build tools. The vanilla hammer and active OdinArchitect tools are supported by default.");
             SortEnabled.SettingChanged += OnSettingChanged;
             OtherTools.SettingChanged += OnSettingChanged;
+            if (OdinArchitectCompatibility.Initialize())
+                Logger.LogInfo("OdinArchitect detected; Odin's Hammer and Stone Chisel sorting is available automatically.");
             harmony = new Harmony(Guid);
             harmony.PatchAll(typeof(HammerSortPlugin).Assembly);
             Logger.LogInfo("HammerSort " + Version + " by " + Author + " loaded (client-side, inventory-based sorting).");
@@ -49,7 +52,7 @@ namespace HammerSort
             if (!SortEnabled.Value || player == null || player.GetBuildTool() == null) return false;
             if (OtherTools.Value) return true;
             ItemDrop.ItemData item = RightItem(player);
-            return item != null && item.m_shared.m_name == "$item_hammer";
+            return item != null && ToolSelection.ShouldSort(item.m_shared.m_name, OdinArchitectCompatibility.IsActive);
         }
 
         private static readonly Func<Humanoid, ItemDrop.ItemData> RightItem =
@@ -182,6 +185,7 @@ namespace HammerSort
         private static List<BuildUiPieceButton> buttons;
         private static readonly StableOrder<BuildUiPieceButton> order = new StableOrder<BuildUiPieceButton>();
         private static int revision = -1;
+        private static bool sorting;
         private static readonly Action<BuildUi> ConfigureNavigation = (Action<BuildUi>)Delegate.CreateDelegate(
             typeof(Action<BuildUi>), AccessTools.Method(typeof(BuildUi), "ConfigureButtonNavigation"));
 
@@ -196,11 +200,13 @@ namespace HammerSort
 
         internal static void Refresh(BuildUi ui)
         {
-            if (!ReferenceEquals(owner, ui) || revision == HammerSortPlugin.Revision) return;
+            if (!ReferenceEquals(owner, ui)) return;
             Player player = Player.m_localPlayer;
             if (player == null) return;
-            revision = HammerSortPlugin.Revision;
             bool enabled = HammerSortPlugin.ShouldSort(player);
+            if (revision == HammerSortPlugin.Revision && sorting == enabled) return;
+            revision = HammerSortPlugin.Revision;
+            sorting = enabled;
             if (enabled) Materials.Prepare(player);
             if (order.Apply(buttons, enabled ? Materials.ButtonHasMaterials : null)) UpdateLayout();
         }

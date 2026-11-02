@@ -22,7 +22,7 @@ dotnet build HammerSort.csproj -c Release -p:GameDir='C:\path\to\Valheim' -p:Bep
 .\package.ps1 -DllPath '.\bin\Release\netstandard2.0\HammerSort.dll'
 ```
 
-`StableOrder.cs` is independent of Unity and has randomized transition, restoration, rebuild and no-change tests. Game hooks and referenced APIs can be checked using `tests/VerifyApi.ps1`, which reads the installed Mono.Cecil library. This is metadata verification, not an in-game test.
+`StableOrder.cs` is independent of Unity and has randomized transition, restoration, rebuild and no-change tests. `ToolSelection.cs` is also independent of Unity and is tested with OdinArchitect present, absent and disabled, including live state changes and the vanilla fast path. Game hooks, referenced APIs and the absence of hard OdinArchitect/Jotunn dependencies can be checked using `tests/VerifyApi.ps1`, which reads the installed Mono.Cecil library. This is metadata verification, not an in-game test.
 
 ```powershell
 .\tests\VerifyApi.ps1 -GameDir 'C:\path\to\Valheim' -BepInExDir 'C:\path\to\profile\BepInEx' -DllPath '.\work\build\HammerSort.dll'

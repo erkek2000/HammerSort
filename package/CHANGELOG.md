@@ -1,3 +1,10 @@
+# 1.1.0
+
+- Automatically supports OdinArchitect's Odin's Hammer and Stone Chisel when the optional plugin is loaded and enabled.
+- Keeps vanilla hammer sorting available when OdinArchitect is missing or disabled; no new required dependencies.
+- Reuses the existing stable sorting, inventory cache and selection handling for both custom menus.
+- Restores browser order if optional tool support is disabled while the menu is open.
+
 # 1.0.0
 
 - Initial release for Valheim 1.0.21.
