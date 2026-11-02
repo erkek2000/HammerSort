@@ -14,7 +14,7 @@ namespace HammerSort
     {
         public const string Author = "ERKEK2000";
         public const string Guid = Author + ".valheim.hammersort";
-        public const string Version = "1.1.2";
+        public const string Version = "1.1.3";
         internal static ConfigEntry<bool> SortEnabled;
         internal static ConfigEntry<bool> OtherTools;
         internal static int Revision;

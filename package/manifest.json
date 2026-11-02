@@ -1,8 +1,8 @@
 {
   "name": "HammerSort",
-  "version_number": "1.1.2",
+  "version_number": "1.1.3",
   "website_url": "https://github.com/erkek2000/HammerSort",
-  "description": "Affordable build pieces first, with stable ordering. Automatically supports OdinArchitect's hammer and chisel when installed. Lightweight and client-side.",
+  "description": "Less searching, more building. HammerSort automatically puts pieces you can afford first in vanilla and modded build menus. Lightweight, client-side, and ready to build.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2360"
   ]

@@ -2,7 +2,7 @@
 
 By **ERKEK2000**.
 
-Automatically puts hammer pieces you have enough materials for first. Pieces you cannot afford follow immediately below, in the same original order. Also supports OdinArchitect's Odin's Hammer and Stone Chisel automatically when that mod is loaded and enabled.
+Less searching, more building. HammerSort automatically puts pieces you can afford first in vanilla and modded build menus. Lightweight, client-side, and ready to build.
 
 For example, if the game's order is **A, B, C, D**, and you can afford B and D, the result is **B, D, A, C**. Once you can afford A as well, it becomes **A, B, D, C**.
 
@@ -58,7 +58,7 @@ Sorting is a stable linear partition, rather than a comparison sort. Inventory q
 
 Built against Valheim **1.0.21**, Steam build **26249040**, with BepInExPack Valheim **5.4.2360**. The current 1.0 `PieceTable` layout is used. Earlier game versions are not supported by this build.
 
-The build, automated sorting tests, optional-tool checks and selection-rebuild regression checks passed. The selection regression reproduces Stone Portal incorrectly becoming Stakewall and checks that the clicked prefab survives Valheim's list rebuild after the fix. HammerSort 1.1.2 still needs an in-game smoke test. The optional integration was checked against the installed OdinArchitect **1.9.4** plugin. MyLittleUI's installed assembly was inspected as a reference for its craftable-first behavior; HammerSort uses its own implementation and separate build-menu hooks. Runtime compatibility with other menu replacements is unverified.
+The build, automated sorting tests, optional-tool checks and selection-rebuild regression checks passed. The selection regression reproduces Stone Portal incorrectly becoming Stakewall and checks that the clicked prefab survives Valheim's list rebuild after the fix. The current build still needs an in-game smoke test. The optional integration was checked against the installed OdinArchitect **1.9.4** plugin. MyLittleUI's installed assembly was inspected as a reference for its craftable-first behavior; HammerSort uses its own implementation and separate build-menu hooks. Runtime compatibility with other menu replacements is unverified.
 
 ## Quick in-game check
 
