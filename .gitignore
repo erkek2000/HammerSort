@@ -1,32 +1,18 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
+# Local build output and release archives
+bin/
+obj/
+work/
+dist/
 *.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
+*.pdb
 *.exe
-*.out
-*.app
+*.zip
+*.log
+
+# IDE and machine-specific files
+.vs/
+.idea/
+*.user
+*.suo
+.env
+.env.*

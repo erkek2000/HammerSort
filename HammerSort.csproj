@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>HammerSort</AssemblyName>
+    <Authors>ERKEK2000</Authors>
+    <Company>ERKEK2000</Company>
+    <Copyright>Copyright (c) 2026 ERKEK2000</Copyright>
+    <Version>1.0.0</Version>
+    <LangVersion>5</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Optimize>true</Optimize>
+    <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Valheim</GameDir>
+    <BepInExDir Condition="'$(BepInExDir)' == ''">$(GameDir)\BepInEx</BepInExDir>
+    <ManagedDir>$(GameDir)\valheim_Data\Managed</ManagedDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src\*.cs" />
+    <Reference Include="assembly_valheim"><HintPath>$(ManagedDir)\assembly_valheim.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>$(ManagedDir)\UnityEngine.UI.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="BepInEx"><HintPath>$(BepInExDir)\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(BepInExDir)\core\0Harmony.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

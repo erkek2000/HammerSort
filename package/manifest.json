@@ -1,0 +1,9 @@
+{
+  "name": "HammerSort",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/erkek2000/HammerSort",
+  "description": "Automatically moves affordable hammer pieces first, preserving the original order within both groups. Lightweight and client-side.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2360"
+  ]
+}
