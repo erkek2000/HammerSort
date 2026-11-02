@@ -40,9 +40,9 @@ After the first modded launch, settings are saved to `BepInEx/config/ERKEK2000.v
 | Setting | Default | Behavior |
 | --- | --- | --- |
 | `General.Enabled` | `true` | Enable automatic sorting. Disabling restores the captured game order. |
-| `General.OtherBuildTools` | `false` | Also sort the hoe, cultivator and other tools. Vanilla hammer and active OdinArchitect tools are included automatically. |
+| `General.OtherBuildTools` | `true` | Sort all build tools, including the hoe and cultivator. Set false to limit sorting to the vanilla hammer and active OdinArchitect tools. |
 
-Changes made through BepInEx ConfigurationManager apply immediately. When editing the file manually, close the game first.
+Changes made through BepInEx ConfigurationManager apply immediately. When editing the file manually, close the game first. The default applies to newly created settings; existing saved values are preserved. To enable sorting for every build tool in an existing config, set `OtherBuildTools = true`.
 
 ## What counts as affordable?
 
@@ -58,7 +58,7 @@ Sorting is a stable linear partition, rather than a comparison sort. Inventory q
 
 Built against Valheim **1.0.21**, Steam build **26249040**, with BepInExPack Valheim **5.4.2360**. The current 1.0 `PieceTable` layout is used. Earlier game versions are not supported by this build.
 
-The build, automated sorting tests and optional-tool selection checks passed. Vanilla functionality in 1.0.0 was confirmed in-game by the author. The optional integration was checked against the installed OdinArchitect **1.9.4** plugin; its in-game menus still need a smoke test with HammerSort 1.1.0. MyLittleUI's installed assembly was inspected as a reference for its craftable-first behavior; HammerSort uses its own implementation and separate build-menu hooks. Runtime compatibility with other menu replacements is unverified.
+The build, automated sorting tests and optional-tool selection checks passed. Vanilla functionality in 1.0.0 was confirmed in-game by the author. The optional integration was checked against the installed OdinArchitect **1.9.4** plugin; its in-game menus still need a smoke test with HammerSort 1.1.1. MyLittleUI's installed assembly was inspected as a reference for its craftable-first behavior; HammerSort uses its own implementation and separate build-menu hooks. Runtime compatibility with other menu replacements is unverified.
 
 ## Quick in-game check
 

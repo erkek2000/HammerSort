@@ -1,3 +1,8 @@
+# 1.1.1
+
+- Changed the default for General.OtherBuildTools to true, enabling sorting for all build tools on new configs.
+- Existing saved config values remain unchanged.
+
 # 1.1.0
 
 - Automatically supports OdinArchitect's Odin's Hammer and Stone Chisel when the optional plugin is loaded and enabled.

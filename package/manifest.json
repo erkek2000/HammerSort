@@ -1,6 +1,6 @@
 {
   "name": "HammerSort",
-  "version_number": "1.1.0",
+  "version_number": "1.1.1",
   "website_url": "https://github.com/erkek2000/HammerSort",
   "description": "Affordable build pieces first, with stable ordering. Automatically supports OdinArchitect's hammer and chisel when installed. Lightweight and client-side.",
   "dependencies": [

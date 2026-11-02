@@ -14,7 +14,7 @@ namespace HammerSort
     {
         public const string Author = "ERKEK2000";
         public const string Guid = Author + ".valheim.hammersort";
-        public const string Version = "1.1.0";
+        public const string Version = "1.1.1";
         internal static ConfigEntry<bool> SortEnabled;
         internal static ConfigEntry<bool> OtherTools;
         internal static int Revision;
@@ -24,8 +24,8 @@ namespace HammerSort
         {
             SortEnabled = Config.Bind("General", "Enabled", true,
                 "Put pieces you have materials for first, preserving the game order in both groups.");
-            OtherTools = Config.Bind("General", "OtherBuildTools", false,
-                "Also sort the hoe, cultivator and other build tools. The vanilla hammer and active OdinArchitect tools are supported by default.");
+            OtherTools = Config.Bind("General", "OtherBuildTools", true,
+                "Sort the hoe, cultivator and all other build tools too. Set false to limit sorting to the vanilla hammer and active OdinArchitect tools.");
             SortEnabled.SettingChanged += OnSettingChanged;
             OtherTools.SettingChanged += OnSettingChanged;
             if (OdinArchitectCompatibility.Initialize())
