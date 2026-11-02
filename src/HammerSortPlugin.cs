@@ -14,7 +14,7 @@ namespace HammerSort
     {
         public const string Author = "ERKEK2000";
         public const string Guid = Author + ".valheim.hammersort";
-        public const string Version = "1.1.1";
+        public const string Version = "1.1.2";
         internal static ConfigEntry<bool> SortEnabled;
         internal static ConfigEntry<bool> OtherTools;
         internal static int Revision;
@@ -59,6 +59,20 @@ namespace HammerSort
             (Func<Humanoid, ItemDrop.ItemData>)Delegate.CreateDelegate(
                 typeof(Func<Humanoid, ItemDrop.ItemData>),
                 AccessTools.Method(typeof(Humanoid), "GetRightItem"));
+
+        [HarmonyPatch(typeof(Player), "SetSelectedPiece", new Type[] { typeof(Piece) })]
+        private static class PieceSelectedByIdentity
+        {
+            [HarmonyPriority(Priority.First)]
+            private static void Prefix(Player __instance)
+            {
+                // Valheim resolves the Piece to an index, then SetBuildCategory rebuilds
+                // the lists before that index is used. Restore before the lookup so both
+                // operations see the same order. The next HUD refresh sorts the grid again.
+                if (ReferenceEquals(__instance, Player.m_localPlayer))
+                    QuickGrid.BeforeRebuild(__instance.GetBuildTool());
+            }
+        }
 
         [HarmonyPatch(typeof(Player), "OnInventoryChanged")]
         private static class InventoryChanged

@@ -58,7 +58,7 @@ Sorting is a stable linear partition, rather than a comparison sort. Inventory q
 
 Built against Valheim **1.0.21**, Steam build **26249040**, with BepInExPack Valheim **5.4.2360**. The current 1.0 `PieceTable` layout is used. Earlier game versions are not supported by this build.
 
-The build, automated sorting tests and optional-tool selection checks passed. Vanilla functionality in 1.0.0 was confirmed in-game by the author. The optional integration was checked against the installed OdinArchitect **1.9.4** plugin; its in-game menus still need a smoke test with HammerSort 1.1.1. MyLittleUI's installed assembly was inspected as a reference for its craftable-first behavior; HammerSort uses its own implementation and separate build-menu hooks. Runtime compatibility with other menu replacements is unverified.
+The build, automated sorting tests, optional-tool checks and selection-rebuild regression checks passed. The selection regression reproduces Stone Portal incorrectly becoming Stakewall and checks that the clicked prefab survives Valheim's list rebuild after the fix. HammerSort 1.1.2 still needs an in-game smoke test. The optional integration was checked against the installed OdinArchitect **1.9.4** plugin. MyLittleUI's installed assembly was inspected as a reference for its craftable-first behavior; HammerSort uses its own implementation and separate build-menu hooks. Runtime compatibility with other menu replacements is unverified.
 
 ## Quick in-game check
 

@@ -20,6 +20,7 @@ internal static class StableOrderTests
         try
         {
             ToolSelectionTests.Run();
+            SelectionRebuildTests.Run();
             Random random = new Random(42);
             foreach (int size in new[] { 0, 1, 2, 15, 90, 1000 })
             {

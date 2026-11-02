@@ -1,3 +1,9 @@
+# 1.1.2
+
+- Fixed clicking a sorted build-browser icon selecting a different piece. Restore the backing table before Valheim resolves a prefab to an index, so the subsequent table rebuild keeps that index valid.
+- Preserve the existing compact-grid coordinate mapping and placed-piece copying behavior.
+- Added regression checks for selection across inventory changes, table rebuilds and grid row boundaries.
+
 # 1.1.1
 
 - Changed the default for General.OtherBuildTools to true, enabling sorting for all build tools on new configs.

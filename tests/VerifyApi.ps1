@@ -41,6 +41,17 @@ foreach ($type in (Get-Types $plugin.MainModule.Types)) {
     $targetType = $patch.ConstructorArguments[0].Value.Resolve()
     $name = $patch.ConstructorArguments[1].Value
     $targets = @($targetType.Methods | Where-Object Name -eq $name)
+    if ($patch.ConstructorArguments.Count -ge 3) {
+        $argumentTypes = @($patch.ConstructorArguments[2].Value | ForEach-Object { $_.Value.FullName })
+        $targets = @($targets | Where-Object {
+            $candidate = $_
+            if ($candidate.Parameters.Count -ne $argumentTypes.Count) { return $false }
+            for ($i = 0; $i -lt $argumentTypes.Count; ++$i) {
+                if ($candidate.Parameters[$i].ParameterType.FullName -ne $argumentTypes[$i]) { return $false }
+            }
+            return $true
+        })
+    }
     if ($targets.Count -ne 1) { throw "Missing/ambiguous patch target: $($targetType.FullName).$name" }
     $target = $targets[0]
     foreach ($method in $type.Methods) {
@@ -69,6 +80,18 @@ foreach ($type in (Get-Types $plugin.MainModule.Types)) {
     Write-Output "PATCH OK: $($target.FullName)"
 }
 $game = $resolver.Resolve([Mono.Cecil.AssemblyNameReference]::new('assembly_valheim', [version]'0.0.0.0'))
+$selectionPatch = $pluginType.NestedTypes | Where-Object Name -eq 'PieceSelectedByIdentity'
+$selectionPrefix = $selectionPatch.Methods | Where-Object Name -eq 'Prefix'
+if (!$selectionPrefix -or !@($selectionPrefix.Body.Instructions | Where-Object {
+    $_.Operand -is [Mono.Cecil.MethodReference] -and $_.Operand.FullName -eq 'System.Void HammerSort.QuickGrid::BeforeRebuild(PieceTable)'
+}).Count) { throw 'Selection must restore baseline order before the Piece-to-index lookup' }
+$playerType = $game.MainModule.Types | Where-Object Name -eq 'Player'
+$selectPiece = $playerType.Methods | Where-Object { $_.Name -eq 'SetSelectedPiece' -and $_.Parameters.Count -eq 1 -and $_.Parameters[0].ParameterType.FullName -eq 'Piece' }
+$selectionCalls = @($selectPiece.Body.Instructions | Where-Object { $_.Operand -is [Mono.Cecil.MethodReference] } | ForEach-Object { $_.Operand.Name })
+if (($selectionCalls -join ',') -ne 'GetPieceIndex,SetBuildCategory,SetSelectedPiece') {
+    throw 'Game selection flow changed; review the index-rebuild regression fix'
+}
+Write-Output 'PASS: selection fix targets only the Piece overload and restores order before the game resolves its index.'
 foreach ($entry in @(
     @{Type='Humanoid'; Name='GetRightItem'; Return='ItemDrop/ItemData'},
     @{Type='BuildUi'; Name='ConfigureButtonNavigation'; Return='System.Void'}
